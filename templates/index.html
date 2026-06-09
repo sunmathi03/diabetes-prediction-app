@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Diabetes Risk Prediction</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        h1 { text-align: center; margin-bottom: 30px; color: #333; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; color: #555; }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .nav-buttons { display: flex; gap: 10px; justify-content: center; margin-top: 20px; }
+        .nav-buttons button { width: auto; background: #6c757d; margin-top: 0; }
+        .hint { font-size: 12px; color: #666; margin-top: 3px; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>🏥 Diabetes Risk Prediction</h1>
+    
+    <form action="/predict" method="POST">
+        <div class="form-group">
+            <label>Patient Name:</label>
+            <input type="text" name="PatientName" required autocomplete="off">
+        </div>
+        
+        <div class="form-group">
+            <label>Age (years):</label>
+            <input type="number" name="Age" step="1" required autocomplete="off">
+            <div class="hint">Example: 45</div>
+        </div>
+        
+        <div class="form-group">
+            <label>BMI:</label>
+            <input type="number" name="BMI" step="0.1" required autocomplete="off">
+        </div>
+        
+        <div class="form-group">
+            <label>Glucose (mg/dL):</label>
+            <input type="number" name="Glucose" step="1" required autocomplete="off">
+        </div>
+        
+        <div class="form-group">
+            <label>Blood Pressure (mmHg):</label>
+            <input type="number" name="BloodPressure" step="1" required autocomplete="off">
+        </div>
+        
+        <div class="form-group">
+            <label>Exercise Hours:</label>
+            <input type="number" name="ExerciseHours" step="0.5" required autocomplete="off">
+        </div>
+        
+        <div class="form-group">
+            <label>Family History:</label>
+            <select name="FamilyHistory" required>
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label>Cholesterol:</label>
+            <input type="number" name="Cholesterol" step="1" required autocomplete="off">
+        </div>
+        
+        <div class="form-group">
+            <label>Sleep Hours:</label>
+            <input type="number" name="SleepHours" step="0.5" required autocomplete="off">
+        </div>
+        
+        <div class="form-group">
+            <label>Smoking:</label>
+            <select name="Smoking" required>
+                <option value="0">Non-Smoker</option>
+                <option value="1">Smoker</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label>HbA1c (%):</label>
+            <input type="number" name="HbA1c" step="0.1" required autocomplete="off">
+        </div>
+        
+        <button type="submit">Predict Risk</button>
+    </form>
+    
+    <div class="nav-buttons">
+        <a href="/history"><button type="button">History</button></a>
+        <a href="/search"><button type="button">Search</button></a>
+    </div>
+</div>
+</body>
+</html>

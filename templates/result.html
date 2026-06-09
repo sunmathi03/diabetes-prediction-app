@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Diabetes Prediction Result</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        h1, h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .result-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .risk-low {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+        }
+        
+        .risk-moderate {
+            background: linear-gradient(135deg, #ff9800, #fb8c00);
+        }
+        
+        .risk-high {
+            background: linear-gradient(135deg, #f44336, #da190b);
+        }
+        
+        .probability {
+            font-size: 48px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        th {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .status-normal {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        
+        .status-high {
+            color: #f44336;
+            font-weight: bold;
+        }
+        
+        .status-low {
+            color: #ff9800;
+            font-weight: bold;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .debug-info {
+            background: #f0f0f0;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-size: 12px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Diabetes Prediction Result</h1>
+    
+    <div class="result-box 
+        {% if 'Low' in risk %}risk-low
+        {% elif 'Moderate' in risk %}risk-moderate
+        {% else %}risk-high{% endif %}">
+        
+        <h2>Patient: {{ patient_name }}</h2>
+        <div class="probability">{{ probability }}%</div>
+        <h3>Probability of Developing Diabetes</h3>
+        <h3>Risk Category: {{ risk }}</h3>
+    </div>
+    
+    <h2>Health Status Report</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Health Metric</th>
+                <th>Your Value</th>
+                <th>Normal Range</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in health_report %}
+            <tr>
+                <td>{{ item.Feature }}</strong></td>
+                <td>{{ item.Value }}</td>
+                <td>{{ item.Range }}</td>
+                <td class="status-{{ item.StatusText|lower }}">{{ item.Status }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <div class="button-group">
+        <a href="/download_report" class="btn">📥 Download PDF Report</a>
+        <a href="/" class="btn">🏠 New Prediction</a>
+        <a href="/history" class="btn">📜 View History</a>
+    </div>
+</div>
+</body>
+</html>

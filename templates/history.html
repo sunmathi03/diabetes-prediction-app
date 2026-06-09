@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Patient Prediction History</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .history-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        .history-table td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .history-table tr:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .risk-low {
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .risk-moderate {
+            color: #ff9800;
+            font-weight: bold;
+        }
+        
+        .risk-high {
+            color: #dc3545;
+            font-weight: bold;
+        }
+        
+        .message {
+            text-align: center;
+            padding: 40px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .btn-back {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #6c757d;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        button {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📋 Patient Prediction History</h1>
+        
+        {% if message %}
+        <div class="message">
+            <p>{{ message }}</p>
+            <a href="/" class="btn-back">← Make First Prediction</a>
+        </div>
+        {% elif patients %}
+        <table class="history-table">
+            <thead>
+                <tr>
+                    <th>S.No</th>
+                    <th>Patient Name</th>
+                    <th>Age</th>
+                    <th>BMI</th>
+                    <th>Glucose</th>
+                    <th>BP</th>
+                    <th>Sleep Hrs</th>
+                    <th>Diabetes Risk</th>
+                    <th>Probability</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for patient in patients %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td><strong>{{ patient.PatientName }}</strong></td>
+                    <td>{{ patient.Age }}</td>
+                    <td>{{ patient.BMI }}</td>
+                    <td>{{ patient.Glucose }}</td>
+                    <td>{{ patient.BloodPressure }}</td>
+                    <td>{{ patient.SleepHours }}</td>
+                    <td class="risk-{{ patient.Risk|lower|replace(' ', '-') }}">
+                        {{ patient.Risk }}
+                    </td>
+                    <td>{{ patient['Probability_%'] }}%</td>
+                    <td>{{ patient.Timestamp[:16] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="message">
+            <p>No patient records found</p>
+            <a href="/" class="btn-back">← Make First Prediction</a>
+        </div>
+        {% endif %}
+        
+        <div class="nav-buttons">
+            <a href="/">
+                <button>⬅ Back to Home</button>
+            </a>
+            <a href="/search">
+                <button>🔍 Search Patient</button>
+            </a>
+        </div>
+    </div>
+</body>
+</html>
